@@ -29,13 +29,17 @@ const checkLoginStatus = () => {
 };
 
 function App() {
-  const [acceptedGdpr, setAcceptedGdpr] = useState(false);
+  const [acceptedGdpr, setAcceptedGdpr] = useState(
+    localStorage.getItem("gdprAccepted") === "true",
+  );
   const [isLoggedIn] = useState(checkLoginStatus());
 
   const navigate = useNavigate();
 
   const handleAcceptGdpr = () => {
     setAcceptedGdpr(true);
+
+    localStorage.setItem("gdprAccepted", "true");
 
     if (isLoggedIn) {
       navigate("/home");

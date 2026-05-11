@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ratingsStore from "../stores/RatingsStore";
 import api from "../services/api";
+import { observer } from "mobx-react-lite";
 
-function CarCard({ car }) {
+const CarCard = observer(({ car }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [rating, setRating] = useState(5);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("surveyUser"));
+    if (!user) return;
+
+    const existingRating = ratingsStore.ratings.find(
+      (r) => r.surveyUserId === user.id && r.carId === car.id,
+    );
+
+    if (existingRating) {
+      setRating(existingRating.score);
+      setIsSubmitted(true);
+    }
+  }, [car.id, ratingsStore.ratings]);
 
   const sendRating = async () => {
     const user = JSON.parse(localStorage.getItem("surveyUser"));
@@ -115,7 +130,10 @@ function CarCard({ car }) {
             min="1"
             max="10"
             value={rating}
-            onChange={(e) => setRating(e.target.value)}
+            onChange={(e) => {
+              setRating(e.target.value);
+              setIsSubmitted(false);
+            }}
             className="slider"
           />
 
@@ -132,6 +150,6 @@ function CarCard({ car }) {
       </div>
     </div>
   );
-}
+});
 
 export default CarCard;
