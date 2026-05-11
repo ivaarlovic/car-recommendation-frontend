@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.car-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+}
+
+.car-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.car-content {
+  padding: 18px;
+}
+
+.car-content h2 {
+  margin-top: 0;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.submitted-button {
+  background-color: #28a745;
+  cursor: default;
+  opacity: 0.9;
+}
+
+.details {
+  margin-top: 14px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.gdpr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.gdpr-box {
+  background: white;
+  max-width: 700px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.gdpr-box h2 {
+  margin-top: 0;
+}
+
+.gdpr-box ul {
+  padding-left: 20px;
+}
+
+.gdpr-box button {
+  margin-top: 20px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-box input {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 12px;
+  box-sizing: border-box;
+}
