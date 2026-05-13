@@ -28,7 +28,7 @@ class RatingsStore {
 
     try {
       const response = await api.get(`/SurveyRating/user/${userId}`);
-
+      console.log(response.data);
       runInAction(() => {
         this.ratings = response.data;
       });

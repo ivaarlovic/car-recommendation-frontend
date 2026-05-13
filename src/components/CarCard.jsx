@@ -36,7 +36,7 @@ const CarCard = observer(({ car }) => {
     };
 
     await ratingsStore.sendRating(ratingData);
-
+    await ratingsStore.fetchUserRatings(user.id);
     setIsSubmitted(true);
   };
 
