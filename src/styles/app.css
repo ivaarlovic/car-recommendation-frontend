@@ -203,3 +203,15 @@ button:hover {
 
   transition: width 0.3s ease;
 }
+
+.minimum-ratings-warning {
+  margin-top: 12px;
+
+  background: #fef3c7;
+  color: #92400e;
+
+  padding: 12px;
+  border-radius: 10px;
+
+  font-weight: 500;
+}
