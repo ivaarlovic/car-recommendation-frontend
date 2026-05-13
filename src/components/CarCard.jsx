@@ -95,32 +95,51 @@ const CarCard = observer(({ car }) => {
             }
           }}
         >
-          {showDetails ? "Sakrij detalje" : "Prikaži detalje"}
+          Prikaži detalje
         </button>
 
         {showDetails && (
-          <div className="details">
-            <p>
-              <strong>Konjske snage:</strong> {car.horsePower}
-            </p>
+          <div className="modal-overlay" onClick={() => setShowDetails(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              {car.imageUrl && (
+                <img
+                  src={car.imageUrl}
+                  alt={`${car.brand} ${car.model}`}
+                  className="modal-image"
+                />
+              )}
+              <button
+                className="close-button"
+                onClick={() => setShowDetails(false)}
+              >
+                {" "}
+                ✕
+              </button>
+              <h2>
+                {car.brand} {car.model}
+              </h2>
+              <p>
+                <strong>Konjske snage:</strong> {car.horsePower}
+              </p>
 
-            <p>
-              <strong>Boja:</strong> {car.color}
-            </p>
+              <p>
+                <strong>Boja:</strong> {car.color}
+              </p>
 
-            <p>
-              <strong>Mjenjač:</strong> {car.transmission}
-            </p>
-            <p>
-              <strong>Kilometraža: </strong> {car.mileage} km
-            </p>
-            <p>
-              <strong>Opis:</strong> {car.description}
-            </p>
+              <p>
+                <strong>Mjenjač:</strong> {car.transmission}
+              </p>
+              <p>
+                <strong>Kilometraža: </strong> {car.mileage} km
+              </p>
+              <p>
+                <strong>Opis:</strong> {car.description}
+              </p>
+            </div>
           </div>
         )}
 
-        <div className="reating-section">
+        <div className="rating-section">
           <p className="rating-title">
             Koliko je vjerojatno da biste kupili ovaj automobil?
           </p>
