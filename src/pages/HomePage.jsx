@@ -3,6 +3,7 @@ import carsStore from "../stores/CarsStore";
 import CarCard from "../components/CarCard";
 import { useEffect } from "react";
 import ratingsStore from "../stores/RatingsStore";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = observer(() => {
   useEffect(() => {
@@ -14,6 +15,8 @@ const HomePage = observer(() => {
       ratingsStore.fetchUserRatings(user.id);
     }
   }, []);
+
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("surveyUser"));
   const ratings = ratingsStore.ratings;
@@ -28,6 +31,17 @@ const HomePage = observer(() => {
 
   const minimumRatingsRequired = 15;
   const hasEnoughRatings = ratedCarsCount >= minimumRatingsRequired;
+
+  const handleFinishSurvey = () => {
+    if (hasEnoughRatings) {
+      navigate("/survey-completed");
+    } else {
+      alert(
+        `Morate ocijeniti još ${minimumRatingsRequired - ratedCarsCount} automobila kako biste završili anketu.`,
+      );
+    }
+  };
+
   return (
     <>
       <h1 className="title">Anketa za preporuku automobila</h1>
@@ -63,6 +77,16 @@ const HomePage = observer(() => {
           ))}
         </div>
       )}
+
+      <div className="finish-survey-container">
+        <p className="finish-survey-text">
+          Nakon što ocijenite dovoljan broj automobila, kliknite na gumb ispod
+          kako biste završili anketu.
+        </p>
+        <button className="finish-survey-btn" onClick={handleFinishSurvey}>
+          Završi anketu
+        </button>
+      </div>
     </>
   );
 });

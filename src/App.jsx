@@ -4,6 +4,7 @@ import GdprConsent from "./components/GdprConsent";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import SurveyCompletedPage from "./components/SurveyCompletePage";
 
 import { useState } from "react";
 
@@ -58,6 +59,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
 
         <Route path="/home" element={<HomePage />} />
+
+        <Route path="/survey-completed" element={<SurveyCompletedPage />} />
 
         <Route
           path="*"
