@@ -7,6 +7,11 @@ class UserStore {
 
   constructor() {
     makeAutoObservable(this);
+
+    const stored = localStorage.getItem("surveyUser");
+    if (stored) {
+      this.user = JSON.parse(stored);
+    }
   }
 
   async createSurveyUser(userData) {
@@ -19,6 +24,8 @@ class UserStore {
       });
       localStorage.setItem("surveyUser", JSON.stringify(response.data));
       localStorage.setItem("loginTime", Date.now());
+
+      return response.data;
     } catch (error) {
       console.error("Greška pri dohvaćanju korisnika: ", error);
     } finally {

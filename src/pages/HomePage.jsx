@@ -5,15 +5,11 @@ import { useEffect, useState } from "react";
 import ratingsStore from "../stores/RatingsStore";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import userStore from "../stores/UserStore";
 
 const HomePage = observer(() => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const u = JSON.parse(localStorage.getItem("surveyUser"));
-    setUser(u);
-  }, []);
+  const user = userStore.user;
 
   useEffect(() => {
     carsStore.loadCars();
@@ -90,7 +86,7 @@ const HomePage = observer(() => {
       ) : (
         <div className="cars-grid">
           {carsStore.cars.map((car) => (
-            <CarCard key={car.id} car={car} />
+            <CarCard key={car.id} car={car} user={user} />
           ))}
         </div>
       )}

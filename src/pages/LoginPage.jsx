@@ -6,7 +6,9 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const handleLogin = async (userData) => {
-    await userStore.createSurveyUser(userData);
+    const user = await userStore.createSurveyUser(userData);
+
+    userStore.user = user;
 
     navigate("/home");
   };
