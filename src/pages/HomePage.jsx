@@ -1,30 +1,38 @@
 import { observer } from "mobx-react-lite";
 import carsStore from "../stores/CarsStore";
 import CarCard from "../components/CarCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ratingsStore from "../stores/RatingsStore";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 const HomePage = observer(() => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const u = JSON.parse(localStorage.getItem("surveyUser"));
+    setUser(u);
+  }, []);
+
   useEffect(() => {
     carsStore.loadCars();
+  }, []);
 
-    const user = JSON.parse(localStorage.getItem("surveyUser"));
-
+  useEffect(() => {
     if (user) {
       ratingsStore.fetchUserRatings(user.id);
     }
-  }, []);
+  }, [user]);
 
-  const navigate = useNavigate();
+  const ratings = ratingsStore.ratings ?? [];
+  const cars = carsStore.cars ?? [];
 
-  const user = JSON.parse(localStorage.getItem("surveyUser"));
-  const ratings = ratingsStore.ratings;
+  const totalCars = cars.length;
 
-  const totalCars = carsStore.cars.length;
-  const ratedCarsCount = ratings.filter(
-    (r) => r.surveyUserId === user?.id,
-  ).length;
+  const ratedCarsCount = user
+    ? ratings.filter((r) => r.surveyUserId === user.id).length
+    : 0;
 
   const progressPercentage =
     totalCars > 0 ? (ratedCarsCount / totalCars) * 100 : 0;
@@ -32,8 +40,14 @@ const HomePage = observer(() => {
   const minimumRatingsRequired = 15;
   const hasEnoughRatings = ratedCarsCount >= minimumRatingsRequired;
 
-  const handleFinishSurvey = () => {
+  const handleFinishSurvey = async () => {
+    if (!user) return;
+
     if (hasEnoughRatings) {
+      await api.post(`/SurveyUser/${user.id}/complete`);
+      localStorage.removeItem("surveyUser");
+      localStorage.removeItem("loginTime");
+
       navigate("/survey-completed");
     } else {
       alert(
@@ -41,6 +55,9 @@ const HomePage = observer(() => {
       );
     }
   };
+
+  console.log("Cars: ", carsStore.cars);
+  console.log("Loading: ", carsStore.loading);
 
   return (
     <>

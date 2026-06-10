@@ -1,14 +1,20 @@
+import { useState } from "react";
+
 function GdprConsent({ onAccept }) {
+  const studentEmail = "iva.arlovic03@gmail.com";
+  const [consentChecked, setConsentChecked] = useState(false);
+
   return (
     <div className="gdpr-container">
       <div className="gdpr-box">
         <h1>Anketa za preporuku automobila</h1>
 
-        <h2>Privola za korištenje podataka</h2>
+        <h2>Privola za obradu osobnih podataka</h2>
 
         <p>
-          Ova anketa provodi se u svrhu izrade diplomskog rada iz područja
-          sustava preporuke automobila.{" "}
+          Ova privola je u potpunosti u skladu s Općom uredbom o zaštiti
+          podataka (GDPR). Podatke prikuplja i obrađuje:{" "}
+          <strong>Iva Arlović</strong> (student/ica).
         </p>
 
         <p>Prikupljaju se sljedeći podaci: </p>
@@ -21,16 +27,32 @@ function GdprConsent({ onAccept }) {
         </ul>
 
         <p>
-          Podaci će se koristiti isključivo za potrebe diplomskog rada i analize
-          sustava preporuke
+          <strong>Svrha:</strong> Podaci se koriste isključivo za potrebe izrade
+          diplomskog rada i analize sustava preporuke. Podaci neće biti javno
+          dostupni niti dijeljeni trećim stranama.
         </p>
-        <p>Podaci neće biti javno dostupni niti dijeljeni trećim stranama.</p>
+        <p>
+          <strong>Rok čuvanja:</strong> Vaši podaci bit će pohranjeni do
+          završetka obrane diplomskog rada, nakon čega će biti trajno obrisani.
+        </p>
 
         <p>
-          Ispunjavanjem ankete pristajete na korištenje podataka u svrhu
-          diplomskog rada.
+          <strong>Opoziv privole:</strong> Svoju privolu možete u bilo kojem
+          trenutku povući slanjem zahtjeva na email adresu:
+          <a href={`mailto:${studentEmail}`}> {studentEmail}</a>.
         </p>
-        <button onClick={onAccept}>Prihvaćam i želim nastaviti</button>
+        <label className="gdpr-checkbox">
+          <input
+            type="checkbox"
+            checked={consentChecked}
+            onChange={(e) => setConsentChecked(e.target.checked)}
+          />
+          Potvrđujem da sam pročitao/la privolu i pristajem na obradu osobnih
+          podataka za potrebe ovog istraživanja.
+        </label>
+        <button onClick={onAccept} disabled={!consentChecked}>
+          Nastavi
+        </button>
       </div>
     </div>
   );

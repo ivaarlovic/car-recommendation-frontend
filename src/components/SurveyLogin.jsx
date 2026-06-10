@@ -19,6 +19,7 @@ function SurveyLogin({ onLogin }) {
     onLogin({
       fullName,
       email,
+      hasConsented: true,
     });
   };
 
