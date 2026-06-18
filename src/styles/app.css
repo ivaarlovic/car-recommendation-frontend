@@ -215,3 +215,77 @@ button:hover {
 
   font-weight: 500;
 }
+
+.scroll-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffcc00; /* Tvoja žuta */
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none; /* Skriveno po defaultu */
+  z-index: 1000;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.scroll-btn.visible {
+  display: block; /* Prikazuje se kad dodamo klasu */
+}
+
+.scroll-btn:hover {
+  background-color: #e6b800;
+}
+
+/* --- RESPONSIVE DIZAJN --- */
+
+@media (max-width: 768px) {
+  /* 1. Smanji padding na mobitelu da aplikacija ne bude stisnuta */
+  .app {
+    padding: 15px 10px;
+  }
+
+  .title {
+    text-align: left;
+  }
+
+  /* 2. Prilagodi grid za mobitel (da auti budu preko cijele širine) */
+  .cars-grid {
+    grid-template-columns: 1fr; /* Jedan stupac */
+    gap: 15px;
+  }
+
+  /* 3. Smanji login box da stane na ekran */
+  .login-box {
+    width: 90%; /* skoro cijela širina */
+    padding: 20px;
+  }
+
+  /* 4. Modal na mobitelu */
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+    padding-top: 50px;
+  }
+
+  .modal-image {
+    width: 100%; /* slika neka zauzme sve */
+  }
+
+  /* 5. Gumb za završetak ankete - neka bude pun širine na mobitelu */
+  .finish-survey-btn {
+    width: 100%;
+    padding: 15px;
+  }
+
+  /* 6. Dodatno za fontove ako želiš da budu čitljiviji */
+  h1 {
+    font-size: 1.5rem;
+  }
+  .title {
+    margin-bottom: 20px;
+  }
+}

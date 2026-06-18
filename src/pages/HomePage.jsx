@@ -6,6 +6,7 @@ import ratingsStore from "../stores/RatingsStore";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import userStore from "../stores/UserStore";
+import ScrollToTop from "../components/ScrollToTop";
 
 const HomePage = observer(() => {
   const navigate = useNavigate();
@@ -57,48 +58,53 @@ const HomePage = observer(() => {
 
   return (
     <>
-      <h1 className="title">Anketa za preporuku automobila</h1>
-
-      <h2>Dobrodošao/la {user?.fullName}</h2>
-      <div className="progress-container">
-        <p className="progress-text">
-          Ocijenili ste {ratedCarsCount} / {totalCars} automobila.
-        </p>
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${progressPercentage}%` }}
-          ></div>
-        </div>
-        {!hasEnoughRatings && (
-          <p className="minimum-ratings-warning">
-            Molimo ocijenite bar {minimumRatingsRequired} automobila kako bi
-            recommendation sustav imao dovoljno podataka.
+      <div className="sticky-header">
+        <h1 className="title">Anketa za preporuku automobila</h1>
+        <h2>Dobrodošao/la {user?.fullName}</h2>
+        <div className="progress-container">
+          <p className="progress-text">
+            Ocijenili ste {ratedCarsCount} / {totalCars} automobila.
           </p>
-        )}
-      </div>
-      <p className="subtitle">
-        Pregledajte automobile i označite koliko biste ih vjerojatno kupili.
-      </p>
-
-      {carsStore.loading ? (
-        <p>Učitavanje...</p>
-      ) : (
-        <div className="cars-grid">
-          {carsStore.cars.map((car) => (
-            <CarCard key={car.id} car={car} user={user} />
-          ))}
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          {!hasEnoughRatings && (
+            <p className="minimum-ratings-warning">
+              Molimo ocijenite bar {minimumRatingsRequired} automobila kako bi
+              recommendation sustav imao dovoljno podataka.
+            </p>
+          )}
         </div>
-      )}
-
-      <div className="finish-survey-container">
-        <p className="finish-survey-text">
-          Nakon što ocijenite dovoljan broj automobila, kliknite na gumb ispod
-          kako biste završili anketu.
+      </div>
+      <div className="main-content">
+        <p className="subtitle">
+          Pregledajte automobile i označite koliko biste ih vjerojatno kupili.
         </p>
-        <button className="finish-survey-btn" onClick={handleFinishSurvey}>
-          Završi anketu
-        </button>
+
+        {carsStore.loading ? (
+          <p>Učitavanje...</p>
+        ) : (
+          <div className="cars-grid">
+            {carsStore.cars.map((car) => (
+              <CarCard key={car.id} car={car} user={user} />
+            ))}
+          </div>
+        )}
+
+        <div className="finish-survey-container">
+          <p className="finish-survey-text">
+            Nakon što ocijenite dovoljan broj automobila, kliknite na gumb ispod
+            kako biste završili anketu.
+          </p>
+          <button className="finish-survey-btn" onClick={handleFinishSurvey}>
+            Završi anketu
+          </button>
+        </div>
+
+        <ScrollToTop />
       </div>
     </>
   );
