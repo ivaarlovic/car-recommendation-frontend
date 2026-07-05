@@ -9,38 +9,23 @@ import LoginPage from "./pages/LoginPage";
 import SurveyCompletedPage from "./components/SurveyCompletePage";
 
 function App() {
-  const [acceptedGdpr, setAcceptedGdpr] = useState(() => {
-    return localStorage.getItem("gdprAccepted") === "true";
-  });
+  const [acceptedGdpr, setAcceptedGdpr] = useState(
+    () => localStorage.getItem("gdprAccepted") === "true",
+  );
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Provjera login statusa
+  // Provjera da li je korisnik ulogiran
   useEffect(() => {
-    const checkLogin = () => {
-      const savedUser = localStorage.getItem("surveyUser");
-      const loginTime = localStorage.getItem("loginTime");
+    const savedUser = localStorage.getItem("surveyUser");
+    const loginTime = localStorage.getItem("loginTime");
 
-      if (!savedUser || !loginTime) {
-        setIsLoggedIn(false);
-        return false;
-      }
-
+    if (savedUser && loginTime) {
       const twoWeeks = 14 * 24 * 60 * 60 * 1000;
-      const now = Date.now();
-
-      if (now - parseInt(loginTime) > twoWeeks) {
-        localStorage.removeItem("surveyUser");
-        localStorage.removeItem("loginTime");
-        setIsLoggedIn(false);
-        return false;
+      if (Date.now() - parseInt(loginTime) < twoWeeks) {
+        setIsLoggedIn(true);
       }
-
-      setIsLoggedIn(true);
-      return true;
-    };
-
-    checkLogin();
+    }
   }, []);
 
   const handleAcceptGdpr = () => {
@@ -48,7 +33,6 @@ function App() {
     setAcceptedGdpr(true);
   };
 
-  // Ako nije prihvatio GDPR → prikaži samo njega
   if (!acceptedGdpr) {
     return <GdprConsent onAccept={handleAcceptGdpr} />;
   }
@@ -58,7 +42,13 @@ function App() {
       <Routes>
         <Route
           path="/login"
-          element={!isLoggedIn ? <LoginPage /> : <Navigate to="/home" />}
+          element={
+            !isLoggedIn ? (
+              <LoginPage setIsLoggedIn={setIsLoggedIn} />
+            ) : (
+              <Navigate to="/home" />
+            )
+          }
         />
 
         <Route
@@ -68,7 +58,6 @@ function App() {
 
         <Route path="/survey-completed" element={<SurveyCompletedPage />} />
 
-        {/* Default ruta */}
         <Route
           path="*"
           element={<Navigate to={isLoggedIn ? "/home" : "/login"} />}

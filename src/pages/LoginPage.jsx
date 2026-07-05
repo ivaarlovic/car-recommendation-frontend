@@ -2,15 +2,25 @@ import SurveyLogin from "../components/SurveyLogin";
 import userStore from "../stores/UserStore";
 import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function LoginPage({ setIsLoggedIn }) {
   const navigate = useNavigate();
 
   const handleLogin = async (userData) => {
-    const user = await userStore.createSurveyUser(userData);
+    try {
+      const user = await userStore.createSurveyUser(userData);
 
-    userStore.user = user;
+      if (user) {
+        userStore.user = user;
+        localStorage.setItem("surveyUser", JSON.stringify(user));
+        localStorage.setItem("loginTime", Date.now().toString());
 
-    navigate("/home");
+        setIsLoggedIn(true);
+        navigate("/home", { replace: true });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Došlo je do pogreške prilikom prijave.");
+    }
   };
 
   return <SurveyLogin onLogin={handleLogin} />;
