@@ -27,8 +27,8 @@ function SurveyLogin({ onLogin }) {
     <div className="login-container">
       <div className="login-box">
         <h1>Sudjelovanje u anketi</h1>
-
         <p>Unesite svoje podatke kako biste mogli sudjelovati u anketi.</p>
+
         <input
           type="text"
           placeholder="Ime i prezime"
@@ -41,10 +41,10 @@ function SurveyLogin({ onLogin }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <button onClick={handleSubmit}>Nastavi</button>
       </div>
     </div>
   );
 }
-
 export default SurveyLogin;

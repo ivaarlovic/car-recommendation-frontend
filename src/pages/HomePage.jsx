@@ -53,8 +53,21 @@ const HomePage = observer(() => {
     }
   };
 
-  console.log("Cars: ", carsStore.cars);
-  console.log("Loading: ", carsStore.loading);
+  useEffect(() => {
+    const header = document.querySelector(".sticky-header");
+
+    const handleScroll = () => {
+      if (window.scrollY > 120) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -63,7 +76,11 @@ const HomePage = observer(() => {
         <h2>Dobrodošao/la {user?.fullName}</h2>
         <div className="progress-container">
           <p className="progress-text">
-            Ocijenili ste {ratedCarsCount} / {totalCars} automobila.
+            Ocijenili ste{" "}
+            <strong>
+              {ratedCarsCount} / {totalCars}
+            </strong>{" "}
+            automobila.
           </p>
           <div className="progress-bar">
             <div

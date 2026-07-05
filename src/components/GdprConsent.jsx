@@ -8,39 +8,44 @@ function GdprConsent({ onAccept }) {
     <div className="gdpr-container">
       <div className="gdpr-box">
         <h1>Anketa za preporuku automobila</h1>
-
         <h2>Privola za obradu osobnih podataka</h2>
 
-        <p>
-          Ova privola je u potpunosti u skladu s Općom uredbom o zaštiti
-          podataka (GDPR). Podatke prikuplja i obrađuje:{" "}
-          <strong>Iva Arlović</strong> (student/ica).
-        </p>
+        <div className="gdpr-content">
+          <p>
+            Ova privola je u potpunosti u skladu s Općom uredbom o zaštiti
+            podataka (GDPR). Podatke prikuplja i obrađuje:{" "}
+            <strong>Iva Arlović</strong> (student/ica).
+          </p>
 
-        <p>Prikupljaju se sljedeći podaci: </p>
+          <p>
+            <strong>Prikupljaju se sljedeći podaci:</strong>
+          </p>
+          <ul>
+            <li>Ime i prezime</li>
+            <li>Email adresa</li>
+            <li>Ocjene automobila</li>
+            <li>Interakcije unutar aplikacije</li>
+          </ul>
 
-        <ul>
-          <li>Ime i prezime</li>
-          <li>Email adresa</li>
-          <li>Ocjene automobila</li>
-          <li>Interakcije unutar aplikacije</li>
-        </ul>
+          <p>
+            <strong>Svrha:</strong> Podaci se koriste isključivo za potrebe
+            izrade diplomskog rada i analize sustava preporuke. Podaci neće biti
+            javno dostupni niti dijeljeni trećim stranama.
+          </p>
 
-        <p>
-          <strong>Svrha:</strong> Podaci se koriste isključivo za potrebe izrade
-          diplomskog rada i analize sustava preporuke. Podaci neće biti javno
-          dostupni niti dijeljeni trećim stranama.
-        </p>
-        <p>
-          <strong>Rok čuvanja:</strong> Vaši podaci bit će pohranjeni do
-          završetka obrane diplomskog rada, nakon čega će biti trajno obrisani.
-        </p>
+          <p>
+            <strong>Rok čuvanja:</strong> Vaši podaci bit će pohranjeni do
+            završetka obrane diplomskog rada, nakon čega će biti trajno
+            obrisani.
+          </p>
 
-        <p>
-          <strong>Opoziv privole:</strong> Svoju privolu možete u bilo kojem
-          trenutku povući slanjem zahtjeva na email adresu:
-          <a href={`mailto:${studentEmail}`}> {studentEmail}</a>.
-        </p>
+          <p>
+            <strong>Opoziv privole:</strong> Svoju privolu možete u bilo kojem
+            trenutku povući slanjem zahtjeva na email adresu:{" "}
+            <a href={`mailto:${studentEmail}`}>{studentEmail}</a>.
+          </p>
+        </div>
+
         <label className="gdpr-checkbox">
           <input
             type="checkbox"
@@ -48,8 +53,9 @@ function GdprConsent({ onAccept }) {
             onChange={(e) => setConsentChecked(e.target.checked)}
           />
           Potvrđujem da sam pročitao/la privolu i pristajem na obradu osobnih
-          podataka za potrebe ovog istraživanja.
+          podataka.
         </label>
+
         <button onClick={onAccept} disabled={!consentChecked}>
           Nastavi
         </button>
