@@ -5,16 +5,25 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 300);
+      setIsVisible(window.scrollY > 400); // pojavljuje se nakon 400px
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <button
-      className={`scroll-btn ${isVisible ? "visible" : ""}`}
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className={`scroll-to-top ${isVisible ? "visible" : ""}`}
+      onClick={scrollToTop}
+      aria-label="Nazad na vrh"
     >
       ↑
     </button>

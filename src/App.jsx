@@ -7,6 +7,7 @@ import GdprConsent from "./components/GdprConsent";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SurveyCompletedPage from "./components/SurveyCompletePage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [acceptedGdpr, setAcceptedGdpr] = useState(false);
