@@ -43,6 +43,7 @@ function App() {
         localStorage.removeItem("gdprTimestamp");
         setAcceptedGdpr(false);
       }
+    } else {
       setAcceptedGdpr(false);
     }
   }, []);
