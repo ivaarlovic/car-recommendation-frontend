@@ -13,9 +13,10 @@ const HomePage = observer(() => {
   const user = userStore.user;
 
   useEffect(() => {
-    carsStore.loadCars();
-  }, []);
-
+    if (user?.id) {
+      carsStore.loadSurveyCars(user.id);
+    }
+  }, [user?.id]);
   useEffect(() => {
     if (user) {
       ratingsStore.fetchUserRatings(user.id);
@@ -27,16 +28,21 @@ const HomePage = observer(() => {
 
   const totalCars = cars.length;
 
+  const assignedCarIds = new Set(cars.map((car) => car.id));
+
   const ratedCarsCount = user
-    ? ratings.filter((r) => r.surveyUserId === user.id).length
+    ? ratings.filter(
+        (rating) =>
+          rating.surveyUserId === user.id && assignedCarIds.has(rating.carId),
+      ).length
     : 0;
 
   const progressPercentage =
     totalCars > 0 ? (ratedCarsCount / totalCars) * 100 : 0;
 
-  const minimumRatingsRequired = 15;
-  const hasEnoughRatings = ratedCarsCount >= minimumRatingsRequired;
+  const minimumRatingsRequired = 30;
 
+  const hasEnoughRatings = totalCars === 30 && ratedCarsCount === 30;
   const handleFinishSurvey = async () => {
     if (!user) return;
 
@@ -90,8 +96,8 @@ const HomePage = observer(() => {
           </div>
           {!hasEnoughRatings && (
             <p className="minimum-ratings-warning">
-              Molimo ocijenite bar {minimumRatingsRequired} automobila kako bi
-              recommendation sustav imao dovoljno podataka.
+              Molimo ocijenite svih 30 automobila kako biste mogli završiti
+              anketu.
             </p>
           )}
         </div>
